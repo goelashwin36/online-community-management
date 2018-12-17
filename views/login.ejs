@@ -1,0 +1,164 @@
+<html>
+<head>
+	<title>
+		ONLINE COMMUNITY MANAGEMENT SYSTEM
+	</title>
+
+	<!--<script src="js/jquery/jquery.min.js"></script>
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/1.js"></script>
+
+	<style>
+		a
+		{
+
+			color:rgb(255, 10, 10);
+			font-family:Times new roman;
+
+		}
+		.inp
+		{
+			color:Black;
+			background-color:White;
+			border:1px solid;
+			border-radius: 12px;
+			width:300px;
+			padding:10px;
+			font-size:22;
+
+		}
+		button {
+			border: none;
+			color: white;
+			padding: 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+		}
+		.colorgraph {
+			height: 5px;
+			border-top: 0;
+			background: #c4e17f;
+			border-radius: 5px;
+			background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71
+			37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%,
+			#62c2e4 87.5%, #62c2e4);
+		}
+		hr {
+			margin-top: 20px;
+			margin-bottom: 20px;
+			border: 0;
+			border-top: 1px solid #eee;
+		}
+		h1
+		{
+			color:lightblack;
+			font-family:times new roman;
+			text-align:center;
+
+		}
+		h2 {
+			overflow: hidden;
+			text-align: center;
+		}
+		h2:before,
+		h2:after {
+			background-color: darkgrey;
+			content: "";
+			display: inline-block;
+			height: 4px;
+			position: relative;
+			vertical-align: middle;
+			width: 50%;
+		}
+		h2:before {
+			right: 0.5em;
+			margin-left: -50%;
+		}
+		h2:after {
+			left: 0.5em;
+			margin-right: -50%;
+		}
+		font
+		{
+			color: blue;
+			font-size:23px;
+		}
+	</style>
+</head>
+<body bgcolor="white">
+<img src="images/a1.jpg" style=" height:150px; width: 60%; margin: 0 auto; display: block" >
+<h2 style="color: black;opacity: 0.7; font-size: 40px "> ONLINE COMMUNITY MANAGEMENT </h2><BR>
+<div style="height:600px;border-right:2px solid blue;width:800px; float:left;margin:50px 0px 50px 90px ">
+	<h1>Login</h1>
+	<hr width="75%"; class="colorgraph">
+	<form name="f1">
+		<table cellspacing="9" align="center">
+			<tr>
+				<td><font>Username</font></td>
+				<td><input type="text" class="inp" id="u" name="user_login" placeholder="Enter Username"></td>
+			</tr>
+			<tr>
+				<td><font>Password</font></td>
+				<!--<td><input type="password" id="p" name="pass_login"></td>-->
+				<td><input type="password" class="inp" id="p" name="pass_login" placeholder="Password"></td>
+
+			</tr>
+
+	</table>
+
+	</form>
+	<button type="button" id="signin" style="margin:0 28%;border-radius:10px;background-color:lime;color:white;width:300;height:50">SIGN IN</button>
+
+	<hr width="75%"; class="colorgraph">
+
+</div>
+<div style="width:800px; float:left;margin:50px 90px 50px 0px">
+	<h1>Registration</h1>
+	<hr width="75%"; class="colorgraph">
+	<table cellspacing="9" align="center">
+		<tr>
+			<td><font>Username</font></td>
+			<td><input type="text" class="inp" name="user_reg" placeholder="New Username"></td>
+		</tr>
+		<tr>
+			<td><font>Password</font></td>
+			<td><input type="password" class="inp" name="pass_reg" placeholder="Password"></td>
+		</tr>
+		<tr>
+			<td><font>First Name</font></td>
+			<td><input type="text" class="inp" name="first" placeholder="Enter First Name"></td>
+		</tr>
+		<tr>
+			<td><font>Middle Name</font></td>
+			<td><input type="text" class="inp" name="mid" placeholder="Enter Middle Name"></td>
+		</tr>
+		<tr>
+			<td><font>Last Name</font></td>
+			<td><input type="text" class="inp" name="last" placeholder="Enter Last Name"></td>
+		</tr>
+		<tr>
+			<td><font>Mobile Number</font></td>
+			<td><input type="number" class="inp" name="mob" placeholder="xxxxxxxxxx"></td>
+		</tr>
+		<tr>
+			<td><font>Email-id</font></td>
+			<td><input type="Email" class="inp" name="email", placeholder="abc@xyz.com"></td>
+		</tr>
+		<tr>
+			<td><font>Date of Birth</font></td>
+			<td><input type="date" class="inp" name="bday"></td>
+		</tr>
+
+	</table>
+	<button type="button" id="signup" style="margin:0 38%;border-radius:10px;background-color:lime;color:white;width:300;height:50">SIGNUP</button>
+
+</div>
+
+</div>
+<hr width="75%"; class="colorgraph">
+</body>
+</html>

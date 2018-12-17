@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-
+Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="js/2.js"></script>
+
+  <style>
+    h1{
+      text-align: center;
+      overflow: hidden;
+    }
+    h2 {
+      overflow: hidden;
+      text-align: center;
+    }
+    h2:before,
+    h2:after {
+      background-color: darkgrey;
+      content: "";
+      display: inline-block;
+      height: 4px;
+      position: relative;
+      vertical-align: middle;
+      width: 50%;
+    }
+    h2:before {
+      right: 0.5em;
+      margin-left: -50%;
+    }
+    h2:after {
+      left: 0.5em;
+      margin-right: -50%;
+    }
+    footer{
+      bottom: 0;
+    }
+  </style>
+</head>
+<body class="w3-theme-l5">
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
+       href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa faglobe"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fauser"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa faenvelope"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account" id="logout">
+      LOGOUT
+    </a>
+  </div>
+</div>
+<h1 style="opacity: 0.7"> ONLINE COMMUNITY MANAGEMENT SYSTEM </h1><HR><br><br><br>
+<h2 style="color: black;opacity: 0.5"> COMMUNITIES WE HAVE </h2><BR>
+<div class="card-deck">
+  <div class="card">
+    <img class="card-img-top" src="images/tech.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Technology</h5>
+    </div>
+    <a href="https://www.google.com" target="_blank">
+      <div class="card-footer">
+        <small class="text-muted" style="text-align: center;">Click here to know more</small>
+      </div></a>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="images/travel.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">TRAVEL</h5>
+    </div>
+    <a href="https://www.google.com" target="_blank">
+      <div class="card-footer">
+        <small class="text-muted" style="text-align: center;">Click here to know more</small>
+      </div></a>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="images/science.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">SCIENCE</h5>
+    </div>
+    <a href="https://www.google.com" target="_blank">
+      <div class="card-footer">
+        <small class="text-muted" style="text-align: center;">Click here to know more</small>
+      </div></a>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="images/social.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">SOCIAL</h5>
+    </div>
+    <a href="https://www.google.com" target="_blank">
+      <div class="card-footer">
+        <small class="text-muted" style="text-align: center;">Click here to know more</small>
+      </div></a>
+  </div>
+</div>
+
+</body>
+</html>

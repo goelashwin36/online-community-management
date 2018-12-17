@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<title>Page 3</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/cookie/jquery.cookie.js"></script>
+<script src="js/3.js"></script>
+<style>
+    a
+    {
+
+        color:rgb(255, 10, 10);
+        font-family:Times new roman;
+
+    }
+    .inp
+    {
+        color:Black;
+        background-color:White;
+        border:1px solid;
+        border-radius: 12px;
+        width:300px;
+        padding:10px;
+        font-size:22;
+
+    }
+    button {
+        border: none;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+    }
+
+
+</style>
+<script>
+    var z = decodeURIComponent(document.cookie);
+    var y = z.split("=")[1].split(","); //y is an array of username and password
+
+    function postComm(x){
+        var id = x.split('-')[1];
+        var inp = $("#input-"+id).val();
+        var date = new Date;
+        var send = {
+            user_id: y[0],
+            ques_id: id,
+            answer: inp,
+            upVotes: null,
+            downVotes: null,
+            date: date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+        };
+        console.log(send);
+        if(inp.length>5) {
+
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "http://localhost:8080/post_comment",
+                    data: send,
+
+                    success: function (res) {
+                        if(res!=="Error") {
+                            response = [res];
+                            //   console.log(response);
+                            var i = 0;
+                            var j = response[i].answers.length - 1;
+
+                            var id = response[i]._id;
+                            var question = response[i].question;
+                            var Answer = response[i].answers;
+
+                            $("#" + id + " " + ".comment").append("<div id=\""+ Answer[j]._id +"\">\n" +
+                                "                    <div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br>\n" +
+                                "<i class=\"fa fa-close w3-right\" id=\"" + "del-" + id + "-" + Answer[j]._id + "\" onclick=\"javascript: delComm(this.id)\" style=\"font-size:24px\"></i><br>"+
+
+                                "                <span class=\"w3-right w3-opacity\">"+ Answer[j].date +"</span>\n" +
+
+                                "                    <h4>" + Answer[j].user_id + "</h4>\n" +
+                                "                    <hr class=\"w3-clear\">\n" +
+                                "                    <p>" + Answer[j].answer + "</p>\n" +
+                                "\n" +
+                                "                    <button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\"  onclick=\"javascript: vote(this.id)\" id=\"" + "up-" + id + "-" + Answer[j]._id + "\"><i class=\"fa fa-thumbs-up\"></i>" + (Answer[j].upVotes.length) + "</button>\n" +
+                                "                    <button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\"  onclick=\"javascript: vote(this.id)\" id=\"" + "down-" + id + "-" + Answer[j]._id + "\"><i class=\"fa fa-thumbs-down\"></i>" + (Answer[j].downVotes.length) + "</button>\n" +
+                                "                </div>\n"+
+                                "            </div>\n");
+                        }
+                        else{
+                            alert("Comment too short!");
+                        }
+                    },
+                });
+        }
+        else{
+            alert("Comment too short");
+        }
+
+    }
+
+    function vote(sectionId){
+        console.log("Vote");
+        var str = sectionId.split('-');
+        var option = str[0];
+        var quesId = str[1];
+        var ansId = str[2];
+        var send = {
+            "ques_id": quesId,
+            "ans_id": ansId,
+            "user_id": y[2]
+
+        };
+        console.log(send);
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "http://localhost:8080/"+option+"Votes",
+                data: send,
+
+                success: function (response) {
+                    if(response === "Error"){
+                        alert("Some Error Occurred")
+                    }
+                    else{
+                        console.log(response);
+                        var up = response.split('-')[1];
+                        var down = response.split('-')[3];
+                    $("#"+"up-"+quesId+"-"+ansId).html("<i class=\"fa fa-thumbs-up\"></i>" + up);
+                    $("#"+"down-"+quesId+"-"+ansId).html("<i class=\"fa fa-thumbs-down\"></i>" + down);
+                    console.log(response);
+                }}
+            });
+
+    }
+
+    function delQues(sectionId){
+        var str = sectionId.split('-');
+        var quesId = str[1];
+        console.log(sectionId);
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "http://localhost:8080/delete_question",
+                data: {
+                    "ques_id": quesId,
+                   // "user_id": "ash" //Edit this **************************
+                },
+
+                success: function (response) {
+                    if(response === "Error"){
+                        alert("Some Error Occurred")
+                    }
+                    else{
+                        $("#" + quesId).remove()
+                    }}
+            });
+    }
+
+    function delComm(sectionId){
+        var str = sectionId.split('-');
+        var quesId = str[1];
+        var ansId = str[2];
+        console.log(sectionId);
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "http://localhost:8080/delete_comment",
+                data: {
+                    "ques_id": quesId,
+                    "ans_id": ansId,
+                   // "user_id": "ash" //Edit this **************************
+                },
+
+                success: function (response) {
+                    if(response === "Error"){
+                        alert("Some Error Occurred")
+                    }
+                    else{
+                        $("#" + ansId).remove();
+                    }}
+            });
+    }
+</script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+</style>
+<body class="w3-theme-l5">
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
+           href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa faglobe"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fauser"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa faenvelope"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account" id="logout">
+            LOGOUT
+        </a>
+    </div>
+</div>
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+</div>
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+    <!-- The Grid -->
+    <div class="w3-row">
+        <div class="w3-col m3">
+            <!-- Profile -->
+            <div class="w3-card w3-round w3-white">
+                <div class="w3-container">
+                    <h4 class="w3-center" id="user_name"></h4>
+                    <hr>
+                    <p id="user_email"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i></p>
+                    <p id="user_mobile"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> </p>
+                    <p id="user_dob"><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i></p>
+                </div>
+            </div>
+            <br>
+            <div class="w3-card w3-round">
+                <div class="w3-white">
+
+                    <button onclick="openCity(event, 'Questions')" id="defaultOpen" class="tablinks w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o
+fa-fw w3-margin-right"></i>Questions</button>
+                    <div id="Demo2" class="w3-hide w3-container">
+                        <p>Some other text..</p>
+                    </div>
+                    <button onclick="openCity(event, 'Articles')" class="tablinks w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o
+fa-fw w3-margin-right"></i>Articles</button>
+                    <div id="Demo2" class="w3-hide w3-container">
+                        <p>Some other text..</p>
+                    </div>
+                    <button onclick="document.getElementById('reqArticle').style.display='block'" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-
+margin-right"></i> Request Article</button>
+
+                    <button onclick="openCity(event, 'Settings')"  class="tablinks w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-cogs fa-fw
+w3-margin-right"></i> Settings</button>
+                    <div id="Demo1" class="w3-hide w3-container">
+                        <p>Some text..</p>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+
+        </div>
+
+
+        <div class="w3-col m7 tabcontent" id="Questions" >
+
+            <div class="w3-row-padding ">
+                <div class="w3-col m12">
+                    <div class="w3-card w3-round w3-white">
+                        <div class="w3-container w3-padding">
+                            <h6 class="w3-opacity">Post Your Question</h6>
+                            <input id="new_q" class="w3-border w3-padding" style="width: 600px">
+                            <button type="button" class="w3-button w3-theme" id="btn_postques"><i class="fa fa-pencil"></i> �Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ques_section">
+
+            </div>
+
+        </div>
+
+        <div id="reqArticle" class="w3-modal w3-animate-opacity">
+            <div class="w3-modal-content w3-card-4">
+                <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('reqArticle').style.display='none'"
+              class="w3-button w3-large w3-display-topright">&times;</span>
+                    <h2>Request Article from admin!</h2>
+                </header>
+                <div class="w3-container">
+                    <h4>Description</h4>
+                    <div class="w3-container w3-padding">
+
+                        <input id="requestQues" class="w3-border w3-padding" style="width: 600px">
+                        <button type="button" class="w3-button w3-theme" id="btnReqArticle"><i class="fa fa-pencil"></i> �Post</button>
+                        <h5 class="w3-opacity" style="display: none" id="artRequested">Article Requested!</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tabcontent w3-col m7" id="Settings">
+            <div class="w3-row-padding ">
+                <div class="w3-col m12">
+                    <div class="w3-card w3-round w3-white">
+                        <div class="w3-container w3-padding">
+                            <h3 align="center">Update Password</h3>
+                            <form name="f1">
+                                <table cellspacing="9" align="center">
+                                    <tr>
+                                        <td><font>Old Password</font></td>
+                                        <td><input type="text" class="inp" id="u" name="old_pass" placeholder="Password"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><font>New Password</font></td>
+                                        <!--<td><input type="password" id="p" name="pass_login"></td>-->
+                                        <td><input type="text" class="inp" id="p" name="new_pass" placeholder="Password"></td>
+
+                                    </tr>
+
+                                </table>
+
+                            </form>
+                            <button type="button" id="update_pass" style="margin:0 28%;border-radius:10px;background-color:lime;color:white;width:300;height:50">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tabcontent w3-col m7" id="Articles">
+            <div class="w3-row-padding ">
+                <div class="w3-col m12">
+                    <div class="w3-card w3-round w3-white">
+                        <div class="w3-container w3-padding">
+                           <h3 align="center">Articles</h3>
+                            <div id="article_section"></div>
+                           <!-- <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                                <span class="w3-right w3-opacity">02-19-2017</span>
+                                <h4>hello</h4>
+                                <hr class="w3-clear">
+                                <p>Answer 1</p>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<br>
+
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>
